@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" width="200" height="200">
+  <defs>
+    <linearGradient id="bodyGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#BFE0EE"/>
+      <stop offset="55%" stop-color="#6FA8C8"/>
+      <stop offset="100%" stop-color="#2E6E93"/>
+    </linearGradient>
+    <linearGradient id="wingGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3E7FA3"/>
+      <stop offset="100%" stop-color="#164C6B"/>
+    </linearGradient>
+    <linearGradient id="lensGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1B3A4B"/>
+      <stop offset="100%" stop-color="#0C2230"/>
+    </linearGradient>
+  </defs>
+
+  <!-- tail -->
+  <path d="M40 130 C20 122 10 108 8 96 C24 100 40 108 50 122 Z" fill="url(#wingGrad)"/>
+
+  <!-- body -->
+  <path d="M50 150
+           C30 150 18 128 22 104
+           C26 78 48 56 82 52
+           C118 48 152 66 162 96
+           C168 114 160 132 142 140
+           C120 150 90 154 68 152
+           C62 151.4 56 151 50 150 Z" fill="url(#bodyGrad)"/>
+
+  <!-- wing -->
+  <path d="M62 138 C80 116 108 108 132 118 C118 138 92 148 68 146 C65.5 143.5 63.5 141 62 138 Z" fill="url(#wingGrad)"/>
+
+  <!-- head -->
+  <circle cx="140" cy="78" r="34" fill="url(#bodyGrad)"/>
+
+  <!-- beak -->
+  <path d="M170 82 L192 78 L170 68 Z" fill="#EFE6D8"/>
+
+  <!-- sunglasses -->
+  <g>
+    <path d="M108 74 C112 66 122 62 130 66 C133 68 134 71 133 74 L112 78 C109 77 107 76 108 74 Z" fill="#0C2230"/>
+    <circle cx="128" cy="76" r="14" fill="url(#lensGrad)"/>
+    <circle cx="156" cy="72" r="12" fill="url(#lensGrad)"/>
+    <path d="M140 74 C144 70 150 70 154 72" stroke="#0C2230" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <path d="M114 68 C110 65 104 65 100 68" stroke="#0C2230" stroke-width="3" fill="none" stroke-linecap="round"/>
+    <circle cx="123" cy="72" r="4" fill="#AED9EA" opacity="0.7"/>
+    <circle cx="151" cy="68" r="3.5" fill="#AED9EA" opacity="0.7"/>
+  </g>
+
+  <!-- feet -->
+  <path d="M98 152 L94 168 M98 152 L102 170 M98 152 L108 166" stroke="#164C6B" stroke-width="3" fill="none" stroke-linecap="round"/>
+</svg>

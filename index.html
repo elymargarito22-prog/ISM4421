@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bluebird Weather — Boca Raton</title>
+  <meta name="description" content="A beachy, bird-branded weather app for Boca Raton, FL, powered by the free Open-Meteo API.">
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="brand">
+      <img src="assets/logo.svg" alt="Bluebird Weather logo" class="brand-logo">
+      <div class="brand-text">
+        <h1>Bluebird Weather</h1>
+        <p class="tagline">FAU Boca Raton &middot; powered by Open-Meteo</p>
+      </div>
+    </div>
+
+    <form id="search-form" class="search-form" autocomplete="off">
+      <input
+        id="search-input"
+        type="text"
+        name="city"
+        placeholder="Search a city…"
+        aria-label="Search for a city"
+      >
+      <button type="submit" class="btn btn-primary">Search</button>
+      <button type="button" id="locate-btn" class="btn btn-ghost" title="Use my location">📍</button>
+    </form>
+  </header>
+
+  <main id="app">
+    <div id="status" class="status" role="status" aria-live="polite"></div>
+
+    <section id="current-card" class="card current-card" hidden>
+      <div class="current-top">
+        <div>
+          <h2 id="current-location">—</h2>
+          <p id="current-updated" class="muted">—</p>
+        </div>
+        <div class="current-icon" id="current-icon" aria-hidden="true">🌤️</div>
+      </div>
+
+      <div class="current-main">
+        <span id="current-temp" class="current-temp">—°</span>
+        <div class="current-details">
+          <p id="current-condition">—</p>
+          <p id="current-feels">Feels like —°</p>
+        </div>
+      </div>
+
+      <div class="current-stats">
+        <div class="stat">
+          <span class="stat-label">Humidity</span>
+          <span id="stat-humidity" class="stat-value">—%</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Wind</span>
+          <span id="stat-wind" class="stat-value">— mph</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Precip. chance</span>
+          <span id="stat-precip" class="stat-value">—%</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Sunset</span>
+          <span id="stat-sunset" class="stat-value">—</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="card" id="hourly-card" hidden>
+      <h3>Next 24 hours</h3>
+      <div id="hourly-scroll" class="hourly-scroll"></div>
+    </section>
+
+    <section class="card" id="daily-card" hidden>
+      <h3>7-day forecast</h3>
+      <div id="daily-list" class="daily-list"></div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>
+      Weather data by <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a> — free, no API key required.
+    </p>
+    <p class="muted">Built for FAU · Boca Raton, FL</p>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>
