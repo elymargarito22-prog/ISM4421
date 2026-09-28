@@ -21,8 +21,74 @@ body {
   margin: 0;
   font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   color: var(--text);
-  background: linear-gradient(180deg, var(--beige) 0%, var(--pastel-blue-soft) 100%);
+  background: var(--beige);
   min-height: 100vh;
+}
+
+/* Day/night sky background, driven by js/app.js setting body[data-theme] from
+   Open-Meteo's is_day flag + sunrise/sunset schedule. */
+#sky-decor {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  transition: background 1.4s ease;
+  background: linear-gradient(180deg, var(--pastel-blue) 0%, var(--beige) 65%, var(--beige) 100%);
+}
+
+.celestial {
+  position: absolute;
+  top: 8%;
+  right: 10%;
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  transition: background 1.4s ease, box-shadow 1.4s ease, top 1.4s ease;
+  background: radial-gradient(circle at 35% 35%, #FFF6DA 0%, #FFD97D 55%, #F3B94B 100%);
+  box-shadow: 0 0 70px 30px rgba(255, 217, 125, 0.45);
+}
+
+.stars {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+  background-image:
+    radial-gradient(1.6px 1.6px at 10% 15%, #fff, transparent),
+    radial-gradient(1.2px 1.2px at 25% 45%, #fff, transparent),
+    radial-gradient(1.8px 1.8px at 40% 10%, #fff, transparent),
+    radial-gradient(1.3px 1.3px at 60% 30%, #fff, transparent),
+    radial-gradient(1.6px 1.6px at 75% 55%, #fff, transparent),
+    radial-gradient(1.2px 1.2px at 88% 20%, #fff, transparent),
+    radial-gradient(1.4px 1.4px at 15% 70%, #fff, transparent),
+    radial-gradient(1.7px 1.7px at 92% 65%, #fff, transparent);
+  background-repeat: repeat;
+  background-size: 340px 340px;
+}
+
+body[data-theme="night"] #sky-decor {
+  background: linear-gradient(180deg, #0B1B33 0%, #16314F 55%, #1B3A4B 100%);
+}
+
+body[data-theme="night"] .celestial {
+  top: 10%;
+  background: radial-gradient(circle at 35% 35%, #F3FAFF 0%, #CFE6F2 55%, #9FC4DA 100%);
+  box-shadow: 0 0 55px 22px rgba(191, 224, 238, 0.35);
+}
+
+body[data-theme="night"] .stars {
+  opacity: 1;
+}
+
+/* Text sitting directly on the sky background (not inside a white card) needs
+   a lighter color once the background goes dark at night. */
+body[data-theme="night"] .status,
+body[data-theme="night"] .site-footer {
+  color: #C9DCE8;
+}
+
+body[data-theme="night"] .site-footer a {
+  color: #BFE0EE;
 }
 
 a {

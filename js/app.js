@@ -83,7 +83,7 @@ async function fetchForecast({ latitude, longitude }) {
   const params = new URLSearchParams({
     latitude,
     longitude,
-    current: "temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,precipitation",
+    current: "temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,precipitation,is_day",
     hourly: "temperature_2m,weather_code,precipitation_probability",
     daily: "weather_code,temperature_2m_max,temperature_2m_min,precipitation_probability_max,sunrise,sunset",
     temperature_unit: "fahrenheit",
@@ -128,6 +128,42 @@ function formatHour(isoString) {
 
 function formatDay(isoString) {
   return new Date(isoString + "T00:00:00").toLocaleDateString("en-US", { weekday: "short" });
+}
+
+// Sun-by-day / moon-by-night background. Open-Meteo gives current.is_day for
+// "right now," plus a sunrise/sunset for each of the 7 fetched days — we use
+// those to pre-schedule every transition in the window with setTimeout, so
+// the sky flips automatically at the real moment even if the tab stays open.
+let skyTimers = [];
+
+function clearSkyTimers() {
+  skyTimers.forEach(clearTimeout);
+  skyTimers = [];
+}
+
+function applySkyTheme(isDay) {
+  document.body.dataset.theme = isDay ? "day" : "night";
+}
+
+function scheduleSkyTheme(data) {
+  clearSkyTimers();
+  applySkyTheme(!!data.current.is_day);
+
+  const nowMs = Date.parse(data.current.time);
+  const events = [];
+  data.daily.time.forEach((_, i) => {
+    if (data.daily.sunrise[i]) events.push({ atMs: Date.parse(data.daily.sunrise[i]), isDay: true });
+    if (data.daily.sunset[i]) events.push({ atMs: Date.parse(data.daily.sunset[i]), isDay: false });
+  });
+
+  events
+    .filter((e) => e.atMs > nowMs)
+    .sort((a, b) => a.atMs - b.atMs)
+    .forEach((e) => {
+      // setTimeout is capped at ~24.8 days; our 7-day window is well inside that.
+      const id = setTimeout(() => applySkyTheme(e.isDay), e.atMs - nowMs);
+      skyTimers.push(id);
+    });
 }
 
 function renderCurrent(locationName, data) {
@@ -197,6 +233,7 @@ async function loadWeatherFor(location) {
     renderCurrent(location.name, data);
     renderHourly(data);
     renderDaily(data);
+    scheduleSkyTheme(data);
     setStatus("");
   } catch (err) {
     console.error(err);
